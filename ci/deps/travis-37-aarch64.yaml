@@ -11,6 +11,8 @@ dependencies:
   - pytest>=5.0.1
   - pytest-xdist>=1.21
   - hypothesis>=3.58.0
+  - pytest-forked
+  
 
   # pandas dependencies
   - botocore>=1.11
