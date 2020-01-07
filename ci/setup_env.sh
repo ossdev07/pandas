@@ -115,12 +115,12 @@ conda remove --all -q -y -n pandas-dev
 echo
 if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO chmod -R 777 $MINICONDA_DIR
-    #$IS_SUDO conda install botocore
-    #$IS_SUDO conda install numpy
-    #$IS_SUDO conda install python-dateutil=2.8.0
-    #$IS_SUDO conda install hypothesis
-    #$IS_SUDO conda install pytz
-    #$IS_SUDO chmod -R 777 $MINICONDA_DIR
+    $IS_SUDO conda install botocore
+    $IS_SUDO conda install numpy
+    $IS_SUDO conda install python-dateutil=2.8.0
+    $IS_SUDO conda install hypothesis
+    $IS_SUDO conda install pytz
+    $IS_SUDO chmod -R 777 $MINICONDA_DIR
 fi
 
 echo "conda env create -q --file=${ENV_FILE}"
@@ -171,8 +171,8 @@ python setup.py build_ext -q -i
 echo "[Updating pip]"
 if [ `uname -m` = 'aarch64' ]; then
     sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/$ARCHICONDA_PYTHON/site-packages
-    $IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-forked
-    $IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-xdist
+    #$IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-forked
+    #$IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-xdist
     $IS_SUDO $ARCHICONDA_PYTHON -m pip install --no-deps -U pip wheel setuptools
     sudo chmod -R 777 $MINICONDA_DIR
 else
