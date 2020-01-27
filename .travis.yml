@@ -33,6 +33,16 @@ matrix:
     - env:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network and not clipboard)"
 
+    - dist: trusty
+      os: linux
+      sudo: true
+      arch: arm64
+      env:
+        - JOB="3.7" ENV_FILE="ci/deps/travis-37-arm64.yaml" PATTERN="(not slow and not network)"
+      services:
+        - mysql
+        - postgresql      
+
     - env:
         - JOB="3.6, locale" ENV_FILE="ci/deps/travis-36-locale.yaml" PATTERN="((not slow and not network and not clipboard) or (single and db))" LOCALE_OVERRIDE="zh_CN.UTF-8" SQL="1"
       services:
@@ -60,7 +70,11 @@ before_install:
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
   - python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
   - source ci/travis_process_gbq_encryption.sh
-  - export PATH="$HOME/miniconda3/bin:$PATH"
+  - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
+     export PATH="$HOME/archiconda3/bin:$PATH";
+    else
+     export PATH="$HOME/miniconda3/bin:$PATH";
+    fi
   - df -h
   - pwd
   - uname -a
@@ -76,7 +90,11 @@ before_install:
 install:
   - echo "install start"
   - ci/prep_cython_cache.sh
-  - ci/setup_env.sh
+  - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
+     sudo bash +x ./ci/setup_env_arm64.sh;
+    else
+     ci/setup_env.sh;
+    fi  
   - ci/submit_cython_cache.sh
   - echo "install done"
 
@@ -84,8 +102,11 @@ script:
   - echo "script start"
   - echo "$JOB"
   - source activate pandas-dev
-  - ci/run_tests.sh
-
+  - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
+     bash -x ci/run_tests_arm64.sh;
+    else
+     ci/run_tests.sh;
+    fi
 after_script:
   - echo "after_script start"
   - source activate pandas-dev && pushd /tmp && python -c "import pandas; pandas.show_versions();" && popd
