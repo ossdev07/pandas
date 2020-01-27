@@ -8,10 +8,10 @@ import pytest
 
 import pandas as pd
 from pandas import DataFrame, Series, concat, date_range, isna
+import pandas._testing as tm
 from pandas.api.types import is_scalar
 from pandas.core.indexing import IndexingError
 from pandas.tests.indexing.common import Base
-import pandas.util.testing as tm
 
 
 class TestiLoc(Base):
@@ -437,9 +437,9 @@ class TestiLoc(Base):
 
         # trying to use a label
         msg = (
-            r"Location based indexing can only have \[integer, integer"
-            r" slice \(START point is INCLUDED, END point is EXCLUDED\),"
-            r" listlike of integers, boolean array\] types"
+            r"Location based indexing can only have \[integer, integer "
+            r"slice \(START point is INCLUDED, END point is EXCLUDED\), "
+            r"listlike of integers, boolean array\] types"
         )
         with pytest.raises(ValueError, match=msg):
             df.iloc["j", "D"]

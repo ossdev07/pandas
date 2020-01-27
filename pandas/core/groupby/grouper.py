@@ -27,6 +27,7 @@ from pandas.core.frame import DataFrame
 from pandas.core.groupby import ops
 from pandas.core.groupby.categorical import recode_for_groupby, recode_from_groupby
 from pandas.core.indexes.api import CategoricalIndex, Index, MultiIndex
+from pandas.core.indexes.base import InvalidIndexError
 from pandas.core.series import Series
 
 from pandas.io.formats.printing import pprint_thing
@@ -53,7 +54,7 @@ class Grouper:
         This will groupby the specified frequency if the target selection
         (via key or level) is a datetime-like object. For full specification
         of available frequencies, please see `here
-        <http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases>`_.
+        <https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases>`_.
     axis : str, int, defaults to 0
         Number/name of the axis.
     sort : bool, default to False
@@ -194,7 +195,7 @@ class Grouper:
             # use stable sort to support first, last, nth
             indexer = self.indexer = ax.argsort(kind="mergesort")
             ax = ax.take(indexer)
-            obj = obj.take(indexer, axis=self.axis, is_copy=False)
+            obj = obj.take(indexer, axis=self.axis)
 
         self.obj = obj
         self.grouper = ax
@@ -565,7 +566,7 @@ def get_grouper(
             items = obj._data.items
             try:
                 items.get_loc(key)
-            except (KeyError, TypeError):
+            except (KeyError, TypeError, InvalidIndexError):
                 # TypeError shows up here if we pass e.g. Int64Index
                 return False
 
@@ -605,8 +606,8 @@ def get_grouper(
 
         if is_categorical_dtype(gpr) and len(gpr) != obj.shape[axis]:
             raise ValueError(
-                f"Length of grouper ({len(gpr)}) and axis ({obj.shape[axis]})"
-                " must be same length"
+                f"Length of grouper ({len(gpr)}) and axis ({obj.shape[axis]}) "
+                "must be same length"
             )
 
         # create the Grouping
