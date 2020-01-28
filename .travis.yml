@@ -105,7 +105,7 @@ script:
   - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
      travis_wait 15 bash -x ci/run_tests_arm64.sh;
     else
-     ci/run_tests.sh;
+     ./ci/run_tests.sh;
     fi
 after_script:
   - echo "after_script start"
