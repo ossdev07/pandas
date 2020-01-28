@@ -93,7 +93,7 @@ install:
   - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
      sudo bash +x ci/setup_env_arm64.sh;
     else
-     ci/setup_env.sh;
+     ./ci/setup_env.sh;
     fi  
   - ci/submit_cython_cache.sh
   - echo "install done"
