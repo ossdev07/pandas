@@ -23,7 +23,7 @@ fi
 PYTEST_CMD="pytest pandas"
 
 #echo $PYTEST_CMD
-sh -c "$PYTEST_CMD"
+travis_wait 30 sh -c "$PYTEST_CMD"
 
 if [[ "$COVERAGE" && $? == 0 && "$TRAVIS_BRANCH" == "master" ]]; then
     echo "uploading coverage"
