@@ -87,11 +87,11 @@ before_install:
   # This overrides travis and tells it to look nowhere.
   - export BOTO_CONFIG=/dev/null
 
-install:
+install: travis_wait
   - echo "install start"
   - ci/prep_cython_cache.sh
   - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
-     travis_wait 15 sudo bash -x ci/setup_env_arm64.sh;
+     sudo bash -x ci/setup_env_arm64.sh;
     else
      bash -x /ci/setup_env.sh;
     fi  
