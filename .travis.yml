@@ -33,8 +33,7 @@ matrix:
     - env:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network and not clipboard)"
 
-    - dist: trusty
-      os: linux
+    - os: linux
       sudo: true
       arch: arm64
       env:
