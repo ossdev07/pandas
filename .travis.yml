@@ -103,7 +103,7 @@ script:
   - echo "$JOB"
   - source activate pandas-dev
   - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
-     bash -x ci/run_tests_arm64.sh;
+      travis_wait 20 bash -x ci/run_tests_arm64.sh;
     else
      ./ci/run_tests.sh;
     fi
