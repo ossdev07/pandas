@@ -74,10 +74,10 @@ before_install:
     else
      export PATH="$HOME/miniconda3/bin:$PATH";
     fi
-  - df -h
-  - pwd
-  - uname -a
-  - git --version
+  #- df -h
+  #- pwd
+  #- uname -a
+  #- git --version
   - travis_wait 30 ./ci/check_git_tags.sh
   # Because travis runs on Google Cloud and has a /etc/boto.cfg,
   # it breaks moto import, see:
