@@ -76,8 +76,8 @@ before_install:
     fi
   - df -h
   - pwd
-  #- uname -a
-  #- git --version
+  - uname -a
+  - git --version
   - ./ci/check_git_tags.sh
   # Because travis runs on Google Cloud and has a /etc/boto.cfg,
   # it breaks moto import, see:
