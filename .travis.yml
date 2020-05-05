@@ -11,9 +11,6 @@ cache:
   directories:
     - $HOME/.cache # cython cache
     - $HOME/.ccache # compiler cache
-apt:
-  addons:
-    - xvfb
 env:
   global:
     # create a github personal access token
@@ -36,11 +33,11 @@ matrix:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network and not clipboard)"
 
     - arch: arm64
+      dist: xenial
+      services: xvfb
       env:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37-arm64.yaml" PATTERN="(not slow and not network and not clipboard)"
-      services:
-        - xvfb
-
+        
     - env:
         - JOB="3.6, locale" ENV_FILE="ci/deps/travis-36-locale.yaml" PATTERN="((not slow and not network and not clipboard) or (single and db))" LOCALE_OVERRIDE="zh_CN.UTF-8" SQL="1"
       services:
