@@ -13,6 +13,7 @@ cache:
     - $HOME/.ccache # compiler cache
 env:
   global:
+    - PYTEST_WORKERS="auto"
     # create a github personal access token
     # cd pandas-dev/pandas
     # travis encrypt 'PANDAS_GH_TOKEN=personal_access_token' -r pandas-dev/pandas
@@ -61,9 +62,7 @@ before_install:
   - echo "before_install"
   - sudo apt-get -y install xvfb
   - if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
-      export PYTEST_WORKERS = 8;
-    else
-      export PYTEST_WORKERS = "auto";
+      PYTEST_WORKERS=8;
     fi
   # set non-blocking IO on travis
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
