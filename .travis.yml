@@ -61,9 +61,9 @@ before_install:
   - echo "before_install"
   - sudo apt-get -y install xvfb
   - if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
-      PYTEST_WORKERS = 8;
+      export PYTEST_WORKERS = 8;
     else
-      PYTEST_WORKERS = "auto";
+      export PYTEST_WORKERS = "auto";
     fi
   # set non-blocking IO on travis
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
