@@ -60,7 +60,6 @@ matrix:
 before_install:
   - echo "before_install"
   - sudo apt-get -y install xvfb
-  - Xvfb :0 -screen 0 1024x768x24 &
   # set non-blocking IO on travis
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
   - python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
@@ -89,7 +88,7 @@ script:
   - echo "script start"
   - echo "$JOB"
   - source activate pandas-dev
-  - travis_wait 30 ci/run_tests.sh
+  - ci/run_tests.sh
 
 after_script:
   - echo "after_script start"
