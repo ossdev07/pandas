@@ -433,7 +433,7 @@ if is_platform_windows():
         extra_compile_args.append("/Z7")
         extra_link_args.append("/DEBUG")
 else:
-    extra_compile_args = []
+    extra_compile_args = ["-Werror"]
     extra_link_args = []
     if debugging_symbols_requested:
         extra_compile_args.append("-g")
@@ -484,9 +484,9 @@ if "-Werror" in extra_compile_args:
         import numpy as np
     except ImportError:
         pass
-    else:
-        if np.__version__ < LooseVersion("1.16.0"):
-            extra_compile_args.remove("-Werror")
+else:
+    if np.__version__ < LooseVersion("1.16.0"):
+        extra_compile_args.remove("-Werror")
 
 
 # ----------------------------------------------------------------------
