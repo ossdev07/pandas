@@ -53,6 +53,9 @@ matrix:
       services:
         - mysql
         - postgresql
+    - arch: arm64
+      env:
+        - JOB="3.7, arm64" PYTEST_WORKERS=8 ENV_FILE="ci/deps/travis-37-arm64.yaml" PATTERN="(not slow and not network and not clipboard)
   allow_failures:
     - arch: arm64
       env:
